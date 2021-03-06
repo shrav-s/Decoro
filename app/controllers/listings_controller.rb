@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   before_action :set_listing, only: %i[ show edit update destroy ]
+  before_action :set_categories_and_materials, only: [:new, :edit]
 
   # GET /listings or /listings.json
   def index
@@ -60,6 +61,11 @@ class ListingsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_listing
       @listing = Listing.find(params[:id])
+    end
+
+    def set_categories_and_materials
+      @categories = Category.all
+      @materials = Material.all
     end
 
     # Only allow a list of trusted parameters through.
