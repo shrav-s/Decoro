@@ -18,14 +18,15 @@
 
   <div class="form-group mb-4">
     <%= form.label :category_id, class:"col-sm-2" %>
-    <%= form.select :category_id, categories.map {|category| [category.name, category.id]}, class: "form-control" %>
+    <%= form.select :category_id, categories.map {|cat| [cat.name, cat.id]}, class: "form-control" %>
   </div>
    
-  <h6 class= "col-sm-2" > Material </h6>
+  <h6 class="col-sm-2" > Material </h6>
   <div class="form-check mb-4">
     <%= form.collection_check_boxes :material_ids, materials, :id, :name do |b| %>
-      <%=b.check_box(class: "from-check-line ml-2")%>
+      
       <%=b.label(class: "form-check-label mr-2")%>
+      <%=b.check_box %>
       <%end%>
   </div>
   

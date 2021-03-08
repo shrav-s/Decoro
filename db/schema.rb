@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_134147) do
+ActiveRecord::Schema.define(version: 2021_03_08_033030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,13 +33,11 @@ ActiveRecord::Schema.define(version: 2021_03_06_134147) do
   create_table "listings", force: :cascade do |t|
     t.string "name"
     t.bigint "category_id", null: false
-    t.bigint "material_id", null: false
     t.integer "price"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_listings_on_category_id"
-    t.index ["material_id"], name: "index_listings_on_material_id"
   end
 
   create_table "materials", force: :cascade do |t|
@@ -51,5 +49,4 @@ ActiveRecord::Schema.define(version: 2021_03_06_134147) do
   add_foreign_key "listing_materials", "listings"
   add_foreign_key "listing_materials", "materials"
   add_foreign_key "listings", "categories"
-  add_foreign_key "listings", "materials"
 end

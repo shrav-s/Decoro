@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   before_action :set_listing, only: %i[ show edit update destroy ]
-  before_action :set_categories_and_materials, only: [:new, :edit]
+  before_action :set_categories, :set_materials, only: [:new,:create, :edit]
 
   # GET /listings or /listings.json
   def index
@@ -22,8 +22,7 @@ class ListingsController < ApplicationController
 
   # POST /listings or /listings.json
   def create
-    @listing = Listing.new(listing_params)
-
+    @listing = Listing.create(listing_params)
     respond_to do |format|
       if @listing.save
         format.html { redirect_to @listing, notice: "Listing was successfully created." }
@@ -63,13 +62,16 @@ class ListingsController < ApplicationController
       @listing = Listing.find(params[:id])
     end
 
-    def set_categories_and_materials
+    def set_categories
       @categories = Category.all
+    end
+
+    def set_materials
       @materials = Material.all
     end
 
     # Only allow a list of trusted parameters through.
     def listing_params
-      params.require(:listing).permit(:name, :category_id, :material_id, :price, :description)
+      params.require(:listing).permit(:name, :category_id, :price, :description, material_ids: [])
     end
 end
