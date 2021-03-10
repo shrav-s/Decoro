@@ -5,3 +5,23 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+    categories = ["Wall Art", "Clocks", "Home Decorations", "Sculptures", "Vases", "Throws", "Cushions", "Rugs"]
+    materials = ["Wood", "Metal", "Glass", "Ceramic", "Oil Paintings", "Acrylic", "Cotton", "Wool", "Other"]
+
+    if Category.count == 0
+        categories.each do |category|
+            Category.create(name: category)
+            puts "created #{category} category"
+        end
+    end
+
+    if Material.count == 0
+        materials.each do |material|
+            Material.create(name: material)
+            puts "created #{material} material"
+        end
+    end
+
+    if User.count == 0
+        User.create(email: "test@test.com", password:"password", password_confirmation: "password")
+    end
