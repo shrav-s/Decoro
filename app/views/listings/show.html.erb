@@ -1,24 +1,23 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @listing.name %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @listing.category_id %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @listing.price %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @listing.description %>
-</p>
-
-<%= link_to 'Edit', edit_listing_path(@listing) %> |
-<%= link_to 'Back', listings_path %>
+<div class = "container d-flex flex-column flex-md-row px-2 my-2 my-md-5">
+  <div class = "content col-12 col-md-7 col-lg-8 p-0 pr-md-3">
+    <div class = "col-12 p-0 main-preview mb-4">
+      <img class = "card-img top thunbnail" src="https://images.unsplash.com/photo-1611012476923-946232aee4fc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="orange round vase">
+    </div>
+    <button class = "btn btn-primary p-3"> Buy: $ <%=@listing.price%></button>
+  </div>
+  <div class="sidebar col-lg-4 p-0 mx-2 d-md-block">
+    <h1 class= "mb-sm-2 mb-md-4"> <%=@listing.name%> </h1>
+    <p class = "blockquote mt-2"> <%=@listing.description%> </p>
+    <%@listing.materials.each do |material|%>
+      <span class= "badge badge-pill badge-warning"> <%=material.name%> </span>
+    <%end%>
+    
+    
+  </div>
+</div>
+<div class = "container d-flex flex-column flex-md-row px-2 my-2 my-md-5">
+  <div class = "content p-o pr-md-3">
+  <%=link_to "Edit", edit_listing_path(@listing.id), class: "btn btn-warning mr-3" if current_user && current_user.id == @listing.user_id %>
+    <%=link_to "Delete", @listing, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger mr-3" if current_user && current_user.id == @listing.user_id%>
+  </div>
+</div>
