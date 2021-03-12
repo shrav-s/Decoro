@@ -40,7 +40,13 @@
     <%= form.text_area :description%>
   </div>
 
-  <div class="actions">
+  <div class="form-group mb-4">
+      <%=form.label :picture, class:"col-sm-2"%>
+      <%=form.file_field :picture, accept: "image/jpg, image/jpeg, image/png", class: "form-control-file ml-2 mb-2"%>
+      <small class="form-text text-muted">JPG, JPEG, PNG only </small>
+  </div>
+
+  <div class="actions ml-2 mb-4">
     <%= form.submit %>
   </div>
 <% end %>

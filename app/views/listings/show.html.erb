@@ -15,8 +15,8 @@
     
   </div>
 </div>
-<div class = "container d-flex flex-column flex-md-row px-2 my-2 my-md-5">
-  <div class = "content p-o pr-md-3">
+<div class = "container">
+  <div class="d-grid gap-2 d-md-block">
   <%=link_to "Edit", edit_listing_path(@listing.id), class: "btn btn-warning mr-3" if current_user && current_user.id == @listing.user_id %>
     <%=link_to "Delete", @listing, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger mr-3" if current_user && current_user.id == @listing.user_id%>
   </div>

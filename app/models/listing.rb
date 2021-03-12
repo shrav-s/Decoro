@@ -4,4 +4,5 @@ class Listing < ApplicationRecord
   has_many :listing_materials, dependent: :destroy
   has_many :materials, through: :listing_materials
   accepts_nested_attributes_for :listing_materials
+  has_many_attached :picture
 end
