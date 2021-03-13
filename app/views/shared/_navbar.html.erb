@@ -1,34 +1,37 @@
 <nav class ="navbar navbar-expand-md navbar-dark bg-info text-dark sticky-top">
     <div class="container-fluid">
-    <%= link_to "Decoro", root_path, class: "navbar-brand ml" %>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class ="navbar-nav ml-auto">
-            <li class = "nav-item">
-                <%= link_to "Listings", listings_path, class: "nav-link"%>
-            </li>
-            <%if user_signed_in?%>
-            <li class = "nav-item">
-                <%= link_to "Create Listing", new_listing_path, class: "nav-link"%>
-            </li>
-            <li class = "nav-item">
-                <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
-            </li>
-            
-            <%else%>
-            <li class = "nav-item">
-                <%= link_to "Log In", new_user_session_path, class: "nav-link"%>
-            </li>
-            <li class = "nav-item">
-                <%= link_to "Sign Up", new_user_registration_path, class: "nav-link"%>
-            </li>
-            <%end%>
-        </ul>
-    <div>
+        <%= link_to "Decoro", root_path, class: "navbar-brand ml" %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class ="navbar-nav ml-auto">
+                <li class = "nav-item">
+                    <%= link_to "Listings", listings_path, class: "nav-link"%>
+                </li>
+                <%if user_signed_in?%>
+                <li class = "nav-item">
+                    <%= link_to "Create Listing", new_listing_path, class: "nav-link"%>
+                </li>
+                <li class = "nav-item">
+                    <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
+                </li>
+                
+                <%else%>
+                <li class = "nav-item">
+                    <%= link_to "Log In", new_user_session_path, class: "nav-link"%>
+                </li>
+                <li class = "nav-item">
+                    <%= link_to "Sign Up", new_user_registration_path, class: "nav-link"%>
+                </li>
+                <%end%>
+            </ul>
+        <div>
     <div>
 </nav>
+
+
+
 
 
 

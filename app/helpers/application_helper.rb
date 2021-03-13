@@ -13,4 +13,6 @@ module ApplicationHelper
             return 'warning'
         end
     end
+
 end
+
