@@ -1,6 +1,12 @@
 <br>
 <h1 class = "hero-title text-center text-teal"><em>Decoro Listings</em></h1>
 <br>
+<%= form_tag listings_path, method: :get, class:"form-inline  my-2 my-lg-o" do %>
+  <span class="input-group-btn">
+  <%= submit_tag "Search", class: 'btn btn-info'%>
+  </span>
+<%= text_field_tag :search, params[:search], placeholder: "Search by Name", calss:"form-control mr-sm-2"%>
+<%end%>
 <div class = "container">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <%@listings.each do |listing|%>

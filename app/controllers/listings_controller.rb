@@ -7,6 +7,7 @@ class ListingsController < ApplicationController
   # GET /listings or /listings.json
   def index
     @listings = Listing.all
+    @listing_search = Listing.search(params[:search])
   end
 
   # GET /listings/1 or /listings/1.json
@@ -103,6 +104,6 @@ class ListingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def listing_params
-      params.require(:listing).permit(:name, :category_id, :price, :description, :picture, material_ids: [])
+      params.require(:listing).permit(:name, :category_id, :price, :description, :picture, :search, material_ids: [])
     end
 end
