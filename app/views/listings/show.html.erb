@@ -3,16 +3,20 @@
     <div class = "col-12 p-0 main-preview mb-4">
       <img class = "card-img top thunbnail" src="https://images.unsplash.com/photo-1611012476923-946232aee4fc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="orange round vase">
     </div>
-    <button class = "btn btn-primary p-3"> Buy: $ <%=@listing.price%></button>
-  </div>
+    <%if current_user && @listing.purchased == false%>
+    <button data-stripe='payment' class = "btn btn-primary p-3"> Buy: $ <%=convert_price_to_dollars(@listing.price)%></button>
+    <%elsif current_user && @listing.purchased == true%>
+    <button class= "btn btn-secondary" disabled>SOLD</button>
+    <%else%>
+    <%=button_to "Log In to buy", new_user_session_path, class: "btn btn-info p-3" %>
+    <%end%>
+    </div>
   <div class="sidebar col-lg-4 p-0 mx-2 d-md-block">
     <h1 class= "mb-sm-2 mb-md-4"> <%=@listing.name%> </h1>
     <p class = "blockquote mt-2"> <%=@listing.description%> </p>
     <%@listing.materials.each do |material|%>
       <span class= "badge badge-pill badge-warning"> <%=material.name%> </span>
-    <%end%>
-    
-    
+    <%end%> 
   </div>
 </div>
 <div class = "container">
@@ -21,3 +25,19 @@
     <%=link_to "Delete", @listing, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger mr-3" if current_user && current_user.id == @listing.user_id%>
   </div>
 </div>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const button = document.querySelector("[data-stripe = 'payment']");
+  if (button) {
+    button.addEventListener("click", () => {
+      const stripe = Stripe(
+        "<%=Rails.application.credentials.dig(:stripe, :public_key)%>"
+      );
+      stripe.redirectToCheckout({
+        sessionId: "<%= @session_id%>"
+      });
+  });
+  }
+</script>

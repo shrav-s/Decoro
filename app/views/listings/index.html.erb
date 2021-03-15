@@ -12,7 +12,7 @@
             <p class="card-text text-secondary text-truncate"><%=listing.description%></p>
             <div class="d-flex justify-content-between">
               <%=link_to "See More", listing_path(listing.id), class: "btn btn-outline-info stretched-link" %>
-              <h5> $<%=listing.price%> </h5>
+              <h5> $<%=convert_price_to_dollars(listing.price)%> </h5>
             </div>
           </div>
           <div class="card-footer">
