@@ -1,19 +1,22 @@
 <div class = "container d-flex flex-column flex-md-row px-2 my-2 my-md-5">
   <div class = "content col-12 col-md-7 col-lg-8 p-0 pr-md-3">
     <div class = "col-12 p-0 main-preview mb-4">
-    <%if @listing.picture.attached?%>
-    <%=image_tag @listing.picture, class: "thumbnail card-top"%>
-    <%else%>
-    <%=image_tag "hero_img.jpg", alt: "Decor Items image", class:"img-fluid"%>
-    <%end%>
+      <%if @listing.picture.attached?%>
+        <%=image_tag @listing.picture, class: "thumbnail card-top"%>
+      <%else%>
+        <%=image_tag "hero_img.jpg", alt: "Decor Items image", class:"img-fluid"%>
+      <%end%>
     </div>
-    <%if current_user && @listing.purchased == false%>
-    <button data-stripe='payment' class = "btn btn-primary p-3"> Buy: $ <%=price_to_dollars(@listing.price)%></button>
-    <%elsif current_user && @listing.purchased == true%>
-    <button class= "btn btn-secondary" disabled>SOLD</button>
-    <%else%>
-    <%=button_to "Log In to buy", new_user_session_path, class: "btn btn-info p-3" %>
-    <%end%>
+    <%if (current_user && current_user.id != @listing.user_id) && (!@listing.purchased)%>
+      <button data-stripe='payment' class = "btn btn-primary p-3"> Buy: $ <%=convert_price_to_dollars(@listing.price)%></button>
+    <%elsif current_user && current_user.id == @listing.user_id %>
+      <%=link_to "Edit", edit_listing_path(@listing.id), class: "btn btn-warning mr-3" %>
+      <%=link_to "Delete", @listing, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger mr-3" %>
+    <%elsif @listing.purchased == true%>
+      <button class= "btn btn-secondary" disabled>SOLD</button>
+    <%else current_user && current_user.id != @listing.user_id%>
+      <%=button_to "Log In to buy", new_user_session_path, class: "btn btn-info p-3" %>
+    <%end %>
   </div>
   <div class="sidebar col-lg-4 p-0 mx-2 d-md-block">
     <h1 class= "mb-sm-2 mb-md-4"> <%=@listing.name%> </h1>
@@ -23,27 +26,19 @@
     <%end%> 
   </div>
 </div>
-<div class = "container">
-  <div class="d-grid gap-2 d-md-block">
-    <%if !@listing.purchased%>
-      <%=link_to "Edit", edit_listing_path(@listing.id), class: "btn btn-warning mr-3" if current_user && current_user.id == @listing.user_id %>
-      <%=link_to "Delete", @listing, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger mr-3" if current_user && current_user.id == @listing.user_id%>
-    <%end%>
-  </div>
-</div>
 
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-  const button = document.querySelector("[data-stripe = 'payment']");
-  if (button) {
-    button.addEventListener("click", () => {
-      const stripe = Stripe(
-        "<%=Rails.application.credentials.dig(:stripe, :public_key)%>"
-      );
-      stripe.redirectToCheckout({
-        sessionId: "<%= @session_id%>"
-      });
-  });
-  }
+    const button = document.querySelector("[data-stripe='payment']");
+    if (button) {
+      button.addEventListener("click", () => {
+        const stripe = Stripe(
+          "<%=Rails.application.credentials.dig(:stripe, :public_key)%>"
+        );
+        stripe.redirectToCheckout({
+          sessionId: "<%= @session_id%>"
+        });
+    });
+    }
 </script>

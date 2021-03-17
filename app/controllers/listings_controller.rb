@@ -6,7 +6,8 @@ class ListingsController < ApplicationController
 
   # GET /listings or /listings.json
   def index
-    @listings = Listing.all
+    @listings = Listing.search(params[:search])
+    @listings_search = Listing.search(params[:search])
   end
 
   # GET /listings/1 or /listings/1.json
@@ -41,7 +42,6 @@ class ListingsController < ApplicationController
 
   # GET /listings/1/edit
   def edit
-
   end
 
   # POST /listings or /listings.json

@@ -13,12 +13,9 @@ class Listing < ApplicationRecord
 
   def self.search(search)
     if search
-      cat = Category.find_by(name: search)
-        if a
-          self.where(category_id: a)
-        else
-          Listing.all
-        end
+      search_downcase=search.downcase
+      listing_result = self.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%" + "%#{search_downcase}%" + "%", "%" + "%#{search_downcase}%" + "%")
+      listing_result
     else
       Listing.all
     end
