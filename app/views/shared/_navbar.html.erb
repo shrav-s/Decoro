@@ -16,7 +16,9 @@
                 <li class = "nav-item">
                     <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
                 </li>
-                
+                <li class = "class="nav-item dropdown">
+                    <%= link_to " Settings", edit_user_registration_path, method: :get, class: "nav-link"%>
+                </li>
                 <%else%>
                 <li class = "nav-item">
                     <%= link_to "Log In", new_user_session_path, class: "nav-link"%>
