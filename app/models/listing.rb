@@ -22,7 +22,7 @@ class Listing < ApplicationRecord
   end
 
   def remove_whitespaces
-    self.name = self.name.strip.capitalize
+    self.name = self.name.strip
     self.description = self.description.strip
   end
 
