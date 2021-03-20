@@ -7,7 +7,7 @@ class Listing < ApplicationRecord
   has_one_attached :picture
   before_save :remove_whitespaces
   before_validation :change_price_to_cents, if: :price_changed?
-  
+
 
   private
 

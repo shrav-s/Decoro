@@ -7,7 +7,10 @@ class User < ApplicationRecord
   has_many :listings
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
+  validates_format_of :email, with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
+  acts_as_messageable
+  
   def login
     @login || self.username ||self.email
   end
@@ -19,6 +22,15 @@ class User < ApplicationRecord
       ["lower(username) = :value OR lower(email) = :value",
       { value: login.strip.downcase}]).first
   end
+
+  def name
+    "User #{id}"
+  end
+
+  def mailboxer_email(object)
+    nil
+  end
+
 end
 
 

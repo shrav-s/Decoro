@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_021409) do
+ActiveRecord::Schema.define(version: 2021_03_18_053305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  # associates records with blobs, uses ploymorphic 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -24,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_021409) do
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
-
+#contains metadata about file and key
   create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
@@ -36,19 +37,19 @@ ActiveRecord::Schema.define(version: 2021_03_17_021409) do
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
-
+#blobs are referenced as foreign key 
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
-
+  #referenced in listings
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
-
+  #join table for listings, and materials
   create_table "listing_materials", force: :cascade do |t|
     t.bigint "listing_id", null: false
     t.bigint "material_id", null: false
@@ -57,7 +58,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_021409) do
     t.index ["listing_id"], name: "index_listing_materials_on_listing_id"
     t.index ["material_id"], name: "index_listing_materials_on_material_id"
   end
-
+#listing table with foreign keys category_id, user_id
   create_table "listings", force: :cascade do |t|
     t.string "name"
     t.bigint "category_id", null: false
@@ -71,12 +72,66 @@ ActiveRecord::Schema.define(version: 2021_03_17_021409) do
     t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
+  create_table "mailboxer_conversation_opt_outs", id: :serial, force: :cascade do |t|
+    t.string "unsubscriber_type"
+    t.integer "unsubscriber_id"
+    t.integer "conversation_id"
+    t.index ["conversation_id"], name: "index_mailboxer_conversation_opt_outs_on_conversation_id"
+    t.index ["unsubscriber_id", "unsubscriber_type"], name: "index_mailboxer_conversation_opt_outs_on_unsubscriber_id_type"
+  end
+
+  create_table "mailboxer_conversations", id: :serial, force: :cascade do |t|
+    t.string "subject", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mailboxer_notifications", id: :serial, force: :cascade do |t|
+    t.string "type"
+    t.text "body"
+    t.string "subject", default: ""
+    t.string "sender_type"
+    t.integer "sender_id"
+    t.integer "conversation_id"
+    t.boolean "draft", default: false
+    t.string "notification_code"
+    t.string "notified_object_type"
+    t.integer "notified_object_id"
+    t.string "attachment"
+    t.datetime "updated_at", null: false
+    t.datetime "created_at", null: false
+    t.boolean "global", default: false
+    t.datetime "expires"
+    t.index ["conversation_id"], name: "index_mailboxer_notifications_on_conversation_id"
+    t.index ["notified_object_id", "notified_object_type"], name: "index_mailboxer_notifications_on_notified_object_id_and_type"
+    t.index ["notified_object_type", "notified_object_id"], name: "mailboxer_notifications_notified_object"
+    t.index ["sender_id", "sender_type"], name: "index_mailboxer_notifications_on_sender_id_and_sender_type"
+    t.index ["type"], name: "index_mailboxer_notifications_on_type"
+  end
+
+  create_table "mailboxer_receipts", id: :serial, force: :cascade do |t|
+    t.string "receiver_type"
+    t.integer "receiver_id"
+    t.integer "notification_id", null: false
+    t.boolean "is_read", default: false
+    t.boolean "trashed", default: false
+    t.boolean "deleted", default: false
+    t.string "mailbox_type", limit: 25
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "is_delivered", default: false
+    t.string "delivery_method"
+    t.string "message_id"
+    t.index ["notification_id"], name: "index_mailboxer_receipts_on_notification_id"
+    t.index ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type"
+  end
+#referenced in listing through listing-material join table
   create_table "materials", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
-
+#associated with listings and paymnets
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "listing_id", null: false
@@ -108,6 +163,9 @@ ActiveRecord::Schema.define(version: 2021_03_17_021409) do
   add_foreign_key "listing_materials", "materials"
   add_foreign_key "listings", "categories"
   add_foreign_key "listings", "users"
+  add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
   add_foreign_key "orders", "listings"
   add_foreign_key "orders", "users"
 end

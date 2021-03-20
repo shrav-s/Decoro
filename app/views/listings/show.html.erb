@@ -4,7 +4,7 @@
       <%if @listing.picture.attached?%>
         <%=image_tag @listing.picture, class: "thumbnail card-top"%>
       <%else%>
-        <%=image_tag "hero_img.jpg", alt: "Decor Items image", class:"img-fluid"%>
+        <%=image_tag "default_picture.jpg", alt: "Decor Items image", class:"img-fluid"%>
       <%end%>
     </div>
     <%if (current_user && current_user.id != @listing.user_id) && (!@listing.purchased)%>

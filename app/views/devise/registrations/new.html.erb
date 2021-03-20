@@ -14,7 +14,7 @@
 
       <div class="form-group">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control email" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "example@address.com", class:"form-control email" %>
       </div>
 
       <div class="form-group">
@@ -34,7 +34,11 @@
         <%= f.submit "Sign up", class: "btn btn-info"%>
       </div>
     <% end %>
+    
+    <p class="text-info"> Have an account already?</p>
+      <div class="btn btn-outline-info">
       <%= render "devise/shared/links" %>
+      </div>
     </div>
   </div>
 </div>
