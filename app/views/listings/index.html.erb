@@ -1,28 +1,36 @@
-<br>
-<h1 class = "hero-title text-center text-teal"><em>Decoro Listings</em></h1>
-<br>
-<%= render 'search' %>
-<div class = "container">
-
+<div class = "container d-flex flex-column">
+  <br>
+  <h1 class = "hero-title text-center text-teal"><em>Decoro Listings</em></h1>
+  <br>
+  <div>
+    <%= render 'search' %>
+  </div>
+  <br>
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <%@listings.each do |listing|%>
-      <div class="col mb-4">
-        <div class="card border-info mb-3 h-100">
-        <%if listing.picture.attached?%>
-          <%=image_tag listing.picture, class: "thumbnail card-top"%>
-        <%else%>
-          <%=image_tag "hero_img.jpg", alt: "Decor Items image", class:"img-fluid"%>
-        <%end%>
-          <div class="card-body">
-            <h5 class="card-title"><%=listing.name%></h5>
-            <p class="card-text text-secondary text-truncate"><%=listing.description%></p>
-            <div class="d-flex justify-content-between">
-              <%=link_to "See More", listing_path(listing.id), class: "btn btn-outline-info stretched-link" %>
-              <h5> $ <%=convert_price_to_dollars(listing.price)%></h5>
+      <div class="card-group">
+        <div class="col mb-4">   
+          <div class="card border-info mb-3 h-100">         
+            <%if listing.picture.attached?%>
+              <%=image_tag listing.picture, alt: "Decor Item listing image", class: "thumbnail card-img-top img-cut"%>
+            <%else%>
+              <%=image_tag "hero_img.jpg", alt: "Placeholder Decor Items image", class:"thumbnail card-img-top img-cut"%>
+            <%end%>
+            <div class="card-body">
+              <h5 class="card-title"><%=listing.name%></h5>
+              <p class="card-text text-secondary text-truncate h-30"><%=listing.description%></p>
+              <div class="d-flex justify-content-between">
+                <%=link_to "See More", listing_path(listing.id), class: "btn btn-outline-info stretched-link" %>
+                <%if listing.purchased == true%>
+                  <button class= "btn btn-secondary" disabled>SOLD</button>
+                <%else%> 
+                  <h5> $ <%=convert_price_to_dollars(listing.price)%></h5>
+                <%end%>
+              </div>
             </div>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Added <%=time_ago_in_words(listing.created_at)%> ago </small>
+            <div class="card-footer">
+              <small class="text-muted">Added <%=time_ago_in_words(listing.created_at)%> ago </small>
+            </div>         
           </div>
         </div>
       </div>
