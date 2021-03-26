@@ -51,13 +51,13 @@ Decoro is a two-sided market place web application application. The main purpose
       
 ### Installation
 1. Please check that you have:
-  - Ruby version - 2.7.2
-  - nodejs and yarn is installed
-  - Rails version - 6.1.2
-  - PostgreSQL
-3. When cloning repository please make sure that you delete the master.key file in config folder, and generate your own master key.
-4. Run ```gem install bundler```
-5. Run ```bundle intsall```
-6. Run ```rails s```
+    - Ruby version - 2.7.2
+    - nodejs and yarn is installed
+    - Rails version - 6.1.2
+    - PostgreSQL
+2. When cloning repository please make sure that you delete the master.key file in config folder, and generate your own master key.
+3. Run ```gem install bundler```
+4. Run ```bundle intsall```
+5. Run ```rails s```
 
 
