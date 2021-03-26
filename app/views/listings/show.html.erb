@@ -2,7 +2,7 @@
   <div class = "content col-12 col-md-7 col-lg-8 p-0 pr-md-3">
     <div class = "col-12 p-0 main-preview mb-4">
       <%if @listing.picture.attached?%>
-        <%=image_tag @listing.picture, class: "thumbnail card-top "%>
+        <%=image_tag @listing.picture, class: "img-fluid"%>
       <%else%>
         <%=image_tag "default_picture.jpg", alt: "Decor Items image", class:"img-fluid"%>
       <%end%>
