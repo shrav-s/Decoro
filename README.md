@@ -41,7 +41,7 @@ Decoro is a two-sided market place web application application. The main purpose
   - Deployment: Heroku
   - Testing: DBeaver, Postman
   - Cloud storage: AWS S3
-* integration:
+* Integration:
     * External
       - Stripe
       - AWS S3
