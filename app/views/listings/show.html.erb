@@ -19,7 +19,7 @@
     <%end %>
   </div>
   <div class="sidebar col-lg-4 p-0 mx-2 d-md-block">
-    <h1 class= "mb-sm-2 mb-md-4"> <%=@listing.name%> </h1>
+    <h2 class= "mb-sm-2 mb-md-4"> <%=@listing.name%> </h2>
     <p class = "blockquote mt-2"> <%=@listing.description%> </p>
     <%@listing.materials.each do |material|%>
       <span class= "badge badge-pill badge-warning"> <%=material.name%> </span>

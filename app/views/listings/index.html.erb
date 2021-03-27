@@ -10,14 +10,14 @@
     <%@listings.each do |listing|%>
       <div class="card-group">
         <div class="col mb-4">   
-          <div class="card border-info mb-3 h-100">         
+          <div class="card border-info mb-4 h-100">         
             <%if listing.picture.attached?%>
               <%=image_tag listing.picture, alt: "Decor Item listing image", class: "thumbnail card-img-top img-cut"%>
             <%else%>
-              <%=image_tag "hero_img.jpg", alt: "Placeholder Decor Items image", class:"thumbnail card-img-top img-cut"%>
+              <%=image_tag "default_picture.jpg", alt: "Placeholder Decor Items image", class:"thumbnail card-img-top img-cut"%>
             <%end%>
             <div class="card-body">
-              <h5 class="card-title"><%=listing.name%></h5>
+              <h2 class="card-title"><%=listing.name%></h2>
               <p class="card-text text-secondary text-truncate h-30"><%=listing.description%></p>
               <div class="d-flex justify-content-between">
                 <%=link_to "See More", listing_path(listing.id), class: "btn btn-outline-info stretched-link" %>

@@ -1,7 +1,18 @@
 // Place all the styles related to the Pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-.img-fluid{
-    max-width: 100%;
-    height: auto;
+.hero-img { 
+    background-image: url("small.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height:100vh;
+    h3{
+        color: #769da8;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.85rem;
+        position: absolute; 
+        bottom: 10px; 
+        right: 40px;
+    }
 }
